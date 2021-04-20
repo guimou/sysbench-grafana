@@ -8,6 +8,15 @@ spec:
     metadata:
       name: sysbench-file-write
     spec:
+      affinity:
+        nodeAffinity: 
+          requiredDuringSchedulingIgnoredDuringExecution: 
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname 
+                operator: In 
+                values:
+                - perf1-mz8bt-worker-qpwsr
       containers:
       - name: sysbench-file-write
         image: quay.io/guimou/sysbench:rw-log-0.1
@@ -45,7 +54,7 @@ spec:
                 key: database-name
         imagePullPolicy: IfNotPresent
         terminationMessagePolicy: File
-        image: quay.io/guimou/log2sql:0.3
+        image: quay.io/guimou/log2sql:0.6
         volumeMounts:
         - name: shared-data
           mountPath: /logs

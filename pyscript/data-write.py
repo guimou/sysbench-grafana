@@ -13,7 +13,14 @@ db_db = os.environ['MYSQL_DATABASE']
 
 #Set the filename and open the file
 filename = '/logs/output.txt'
-file = open(filename,'r')
+
+while not os.path.exists(filename):
+    time.sleep(1)
+
+if os.path.isfile(filename):
+    file = open(filename,'r')
+else:
+    raise ValueError("%s isn't a file!" % filename)
 
 #Find the size of the file and move to the end
 st_results = os.stat(filename)

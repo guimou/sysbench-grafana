@@ -3,6 +3,16 @@ kind: Grafana
 metadata:
   name: sysbench-grafana
 spec:
+  deployment:
+    affinity:
+        nodeAffinity: 
+          requiredDuringSchedulingIgnoredDuringExecution: 
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname 
+                operator: In 
+                values:
+                - perf1-mz8bt-worker-qpwsr
   ingress:
     enabled: true
   config:
