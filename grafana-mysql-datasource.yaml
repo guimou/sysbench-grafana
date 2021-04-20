@@ -1,0 +1,15 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDataSource
+metadata:
+  name: mysql-grafana-datasource
+  namespace: sysbench-graph
+spec:
+  datasources:
+    - type: mysql
+      name: MySQL
+      access: proxy
+      url: mariadb
+      database: sysbench
+      user: sysbench
+      password: sysbench
+  name: grafana-mysql-datasource.yaml
