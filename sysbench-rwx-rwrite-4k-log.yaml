@@ -1,0 +1,67 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sysbench-file-write
+  namespace: sysbench-graph
+spec:
+  template:
+    metadata:
+      name: sysbench-file-write
+    spec:
+      containers:
+      - name: sysbench-file-write
+        image: quay.io/guimou/sysbench:log
+        command: ["sh"]
+        args:
+          - '-c'
+          - '/tmp/file-random-write-4k-interval-log.sh'
+        volumeMounts:
+        - name: tmp-store
+          mountPath: /tmp/data
+        - name: shared-data
+          mountPath: /logs
+      - resources:
+          limits:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        name: mariadb-connector
+        env:
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-password
+          - name: MYSQL_HOST
+            value: 'mariadb'
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-root-password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-name
+        imagePullPolicy: IfNotPresent
+        terminationMessagePolicy: File
+        image: quay.io/guimou/log2sql:0.2
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+        volumeMounts:
+        - name: shared-data
+          mountPath: /logs
+      volumes:
+      - name: tmp-store
+        persistentVolumeClaim:
+          claimName: pvc-sysbench-write
+          readOnly: false
+      - name: shared-data
+        emptyDir: {}
+      restartPolicy: Never
