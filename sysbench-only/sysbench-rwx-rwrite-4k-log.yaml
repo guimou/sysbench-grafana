@@ -16,7 +16,7 @@ spec:
               - key: kubernetes.io/hostname 
                 operator: In 
                 values:
-                - perf1-mz8bt-worker-qpwsr
+                - perf1-mz8bt-worker-cv55w
       containers:
       - name: sysbench-file-write
         image: quay.io/guimou/sysbench:rw-log-0.1

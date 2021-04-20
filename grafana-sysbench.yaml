@@ -12,7 +12,7 @@ spec:
               - key: kubernetes.io/hostname 
                 operator: In 
                 values:
-                - perf1-mz8bt-worker-qpwsr
+                - perf1-mz8bt-worker-cv55w
   ingress:
     enabled: true
   config:

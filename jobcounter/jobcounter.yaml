@@ -1,0 +1,47 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jobcounter
+spec:
+  template:
+    metadata:
+      name: jobcounter
+    spec:
+      affinity:
+        nodeAffinity: 
+          requiredDuringSchedulingIgnoredDuringExecution: 
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname 
+                operator: In 
+                values:
+                - perf1-mz8bt-worker-cv55w
+      containers:
+      - resources:
+          limits:
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        name: mariadb-connector
+        env:
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-password
+          - name: MYSQL_HOST
+            value: 'mariadb'
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: database-name
+        imagePullPolicy: IfNotPresent
+        terminationMessagePolicy: File
+        image: quay.io/guimou/jobcounter:0.1
+      restartPolicy: Never

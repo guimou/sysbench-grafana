@@ -1,6 +1,6 @@
 mysql -u root
 
-USE sysbench;
+USE mariadb;
 
 DROP TABLE benchmark;
 
