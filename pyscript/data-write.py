@@ -1,3 +1,5 @@
+# This code was written listening to Fortunate Son by Creedence Clearwater Revival
+
 import time, os
 import logging
 import re

@@ -2,8 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sysbench-file-write
-  namespace: sysbench-graph
+  name: sysbench-file-rw
 spec:
   template:
     metadata:
@@ -11,11 +10,11 @@ spec:
     spec:
       containers:
       - name: sysbench-file-write
-        image: quay.io/guimou/sysbench:log
+        image: quay.io/guimou/sysbench:rw-log-0.1
         command: ["sh"]
         args:
           - '-c'
-          - '/tmp/file-random-write-4k-interval-log.sh'
+          - '/tmp/file-random-readwrite-4k-interval-log.sh'
         volumeMounts:
         - name: tmp-store
           mountPath: /tmp/data
@@ -53,7 +52,7 @@ spec:
       volumes:
       - name: tmp-store
         persistentVolumeClaim:
-          claimName: pvc-sysbench-write
+          claimName: pvc-sysbench-readwrite
           readOnly: false
       - name: shared-data
         emptyDir: {}
