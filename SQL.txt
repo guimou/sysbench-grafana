@@ -2,6 +2,8 @@ mysql -u root
 
 USE sysbench;
 
+DROP TABLE benchmark;
+
 CREATE TABLE benchmark (time TIMESTAMP, d_reads VARCHAR(255), d_writes VARCHAR(255), d_fsyncs VARCHAR(255), d_latency VARCHAR(255));
 
 INSERT INTO benchmark (time,d_reads,d_writes,d_fsyncs,d_latency) SELECT CURRENT_TIMESTAMP(), '', '', '', '';

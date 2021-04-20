@@ -39,11 +39,6 @@ spec:
                 key: database-password
           - name: MYSQL_HOST
             value: 'mariadb'
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mariadb
-                key: database-root-password
           - name: MYSQL_DATABASE
             valueFrom:
               secretKeyRef:
@@ -51,9 +46,7 @@ spec:
                 key: database-name
         imagePullPolicy: IfNotPresent
         terminationMessagePolicy: File
-        image: quay.io/guimou/log2sql:0.2
-        command: [ "/bin/bash", "-c", "--" ]
-        args: [ "while true; do sleep 30; done;" ]
+        image: quay.io/guimou/log2sql:0.3
         volumeMounts:
         - name: shared-data
           mountPath: /logs
