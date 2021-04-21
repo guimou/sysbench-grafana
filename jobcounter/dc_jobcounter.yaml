@@ -1,12 +1,16 @@
----
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   name: jobcounter
+  namespace: sysbench
 spec:
+  selector:
+    name: jobcounter
+  replicas: 1
   template:
     metadata:
-      name: jobcounter
+      labels:
+        name: jobcounter
     spec:
       serviceAccountName: jobcounter
       affinity:
@@ -23,9 +27,7 @@ spec:
           limits:
             memory: 512Mi
         terminationMessagePath: /dev/termination-log
-        name: mariadb-connector
-        command: [ "/bin/bash", "-c", "--" ]
-        args: [ "while true; do sleep 30; done;" ]
+        name: jobcounter
         env:
           - name: MYSQL_USER
             valueFrom:
@@ -47,4 +49,4 @@ spec:
         imagePullPolicy: IfNotPresent
         terminationMessagePolicy: File
         image: quay.io/guimou/jobcounter:0.2
-      restartPolicy: Never
+      restartPolicy: Always

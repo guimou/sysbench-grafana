@@ -2,8 +2,42 @@ mysql -u root
 
 USE mariadb;
 
+------ Sysbench TABLE  ----------
+
 DROP TABLE benchmark;
 
 CREATE TABLE benchmark (time TIMESTAMP, d_reads DOUBLE, d_writes DOUBLE, d_fsyncs DOUBLE, d_latency DOUBLE);
 
 INSERT INTO benchmark (time,d_reads,d_writes,d_fsyncs,d_latency) SELECT CURRENT_TIMESTAMP(), null, null, null, null;
+
+----------------------------------
+
+-------- Node TABLES ------------
+DROP TABLE `perf1-mz8bt-master-0`;
+DROP TABLE `perf1-mz8bt-master-1`;
+DROP TABLE `perf1-mz8bt-master-2`;
+DROP TABLE `perf1-mz8bt-worker-cv55w`;
+DROP TABLE `perf1-mz8bt-worker-d2hdm`;
+DROP TABLE `perf1-mz8bt-worker-k68rv`;
+DROP TABLE `perf1-mz8bt-worker-ntkp8`;
+DROP TABLE `perf1-mz8bt-worker-qpwsr`;
+
+CREATE TABLE `perf1-mz8bt-master-0` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-master-1` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-master-2` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-worker-cv55w` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-worker-d2hdm` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-worker-k68rv` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-worker-ntkp8` (time TIMESTAMP, node_status BOOLEAN);
+CREATE TABLE `perf1-mz8bt-worker-qpwsr` (time TIMESTAMP, node_status BOOLEAN);
+
+INSERT INTO `perf1-mz8bt-master-0` (time,node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-master-1` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-master-2` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-worker-cv55w` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-worker-d2hdm` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-worker-k68rv` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-worker-ntkp8` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+INSERT INTO `perf1-mz8bt-worker-qpwsr` (time, node_status) SELECT CURRENT_TIMESTAMP(), '0';
+
+--------------------------------------

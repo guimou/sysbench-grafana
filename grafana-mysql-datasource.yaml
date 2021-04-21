@@ -8,7 +8,7 @@ spec:
       name: MySQL
       access: proxy
       url: mariadb
-      database: sysbench
+      database: mariadb
       user: sysbench
       password: sysbench
   name: grafana-mysql-datasource.yaml
